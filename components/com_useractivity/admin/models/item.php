@@ -133,7 +133,7 @@ class UserActivityModelItem extends JModelAdmin
         $query = $this->_db->getQuery(true);
 
         // Load the item by asset id
-        $query->select('type_id, state, title')
+        $query->select('type_id, title')
               ->from('#__user_activity_items')
               ->where('asset_id = ' . (int) $data['asset_id']);
 
@@ -148,11 +148,6 @@ class UserActivityModelItem extends JModelAdmin
 
             if (isset($data['title']) && $row['title'] != $data['title']) {
                 $obj->title = $data['title'];
-                $update = true;
-            }
-
-            if (isset($data['state']) && $row['state'] != $data['state']) {
-                $obj->state = $data['state'];
                 $update = true;
             }
 
@@ -182,7 +177,6 @@ class UserActivityModelItem extends JModelAdmin
         $obj->asset_id = (int) $data['asset_id'];
         $obj->type_id  = (int) $data['type_id'];
         $obj->id       = (int) $data['id'];
-        $obj->state    = (int) $data['state'];
         $obj->title    = $data['title'];
 
         if (!$this->_db->insertObject('#__user_activity_items', $obj, 'asset_id')) {

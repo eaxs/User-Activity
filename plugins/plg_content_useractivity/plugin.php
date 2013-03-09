@@ -247,14 +247,8 @@ class plgUserActivity extends JPlugin
         // Set the item asset id
         $this->item_data['asset_id'] = (isset($table->asset_id) ? (int) $table->asset_id : 0);
 
-        // Set the item state
-        $this->item_data['state'] = (isset($table->state) ? (int) $table->state : 1);
-
-        // Set the item access
-        $this->item_data['access'] = (isset($table->access) ? (int) $table->access : (int) JFactory::getConfig()->get('access'));
-
         // Set the activity access
-        $this->activity_data['access'] = $this->item_data['access'];
+        $this->activity_data['access'] = (isset($table->access) ? (int) $table->access : (int) JFactory::getConfig()->get('access'));
     }
 
 
@@ -270,9 +264,6 @@ class plgUserActivity extends JPlugin
     {
         // Set the id of the item
         $this->item_data['id'] = (int) $id;
-
-        // Set the item state
-        $this->item_data['state'] = (int) $state;
     }
 
 
@@ -306,17 +297,9 @@ class plgUserActivity extends JPlugin
             $this->activity_data['state'] = 1;
         }
 
-        if (!isset($this->item_data['state'])) {
-            $this->item_data['state'] = 1;
-        }
-
         // Set access if not set
         if (!isset($this->activity_data['access'])) {
             $this->activity_data['access'] = (int) JFactory::getConfig()->get('access');
-        }
-
-        if (!isset($this->item_data['access'])) {
-            $this->item_data['access'] = (int) JFactory::getConfig()->get('access');
         }
 
         // Save the item

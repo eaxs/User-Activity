@@ -26,7 +26,6 @@ CREATE TABLE IF NOT EXISTS `#__user_activity_items` (
   `type_id` smallint(5) unsigned NOT NULL COMMENT 'FK to the user_activity_item_types table',
   `xref_id` int(10) unsigned NOT NULL COMMENT 'Cross Reference ID. Plugin controlled',
   `id` int(10) unsigned NOT NULL COMMENT 'The id of the item itself',
-  `state` tinyint(3) NOT NULL COMMENT 'Last known item state: 1 = Active, 0 = Inactive, 2 = Archived, -2 = Trashed ',
   `title` varchar(255) NOT NULL COMMENT 'Last known item title',
   PRIMARY KEY (`asset_id`),
   KEY `idx_type_id` (`type_id`),
