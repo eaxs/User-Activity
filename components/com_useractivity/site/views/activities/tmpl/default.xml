@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_USERACTIVITY_ACTIVITIES_VIEW_DEFAULT_TITLE" option="COM_USERACTIVITY_ACTIVITIES_VIEW_DEFAULT_OPTION">
+		<message><![CDATA[COM_USERACTIVITY_ACTIVITIES_VIEW_DEFAULT_DESC]]></message>
+	</layout>
+
+    <fields name="params">
+        <fieldset name="layout" label="COM_USERACTIVITY_ACTIVITIES_LAYOUT_OPTIONS">
+            <field
+                name="date_format" type="text" size="15"
+                label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"
+            />
+            <field name="show_filter_search" type="list"
+    			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_DESC">
+    			<option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+    		</field>
+            <field name="show_filter_extension" type="list"
+    			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EXTENSION_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EXTENSION_DESC">
+    			<option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+    		</field>
+            <field name="show_filter_event" type="list"
+    			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EVENT_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EVENT_DESC">
+    			<option value="">JGLOBAL_USE_GLOBAL</option>
+                <option value="0">JNO</option>
+                <option value="1">JYES</option>
+    		</field>
+        </fieldset>
+    </fields>
+</metadata>

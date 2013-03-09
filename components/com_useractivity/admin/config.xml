@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <fieldset name="shared" label="COM_USERACTIVITY_CONFIG_SHARED_SETTINGS_LABEL" description="COM_USERACTIVITY_CONFIG_SHARED_SETTINGS_DESC">
+        <field
+            name="group_activity" type="list" default="5"
+            label="COM_USERACTIVITY_CONFIG_GROUP_ACTIVITY_LABEL" description="COM_USERACTIVITY_CONFIG_GROUP_ACTIVITY_DESC"
+            >
+                <option value="0">COM_USERACTIVITY_FIELD_OPTION_PERIOD_0</option>
+                <option value="1">COM_USERACTIVITY_FIELD_OPTION_PERIOD_1</option>
+                <option value="5">COM_USERACTIVITY_FIELD_OPTION_PERIOD_5</option>
+                <option value="15">COM_USERACTIVITY_FIELD_OPTION_PERIOD_15</option>
+                <option value="30">COM_USERACTIVITY_FIELD_OPTION_PERIOD_30</option>
+                <option value="60">COM_USERACTIVITY_FIELD_OPTION_PERIOD_60</option>
+        </field>
+        <field
+            name="date_format" type="text" size="15"
+            label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"
+        />
+    </fieldset>
+    <fieldset name="frontend" label="COM_USERACTIVITY_CONFIG_FRONTEND_SETTINGS_LABEL" description="COM_USERACTIVITY_CONFIG_FRONTEND_SETTINGS_DESC">
+        <field name="show_filter_search" type="radio" class="btn-group" default="1"
+			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_DESC">
+			<option value="0">JNO</option>
+            <option value="1">JYES</option>
+		</field>
+        <field name="show_filter_extension" type="radio" class="btn-group" default="1"
+			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EXTENSION_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EXTENSION_DESC">
+			<option value="0">JNO</option>
+            <option value="1">JYES</option>
+		</field>
+        <field name="show_filter_event" type="radio" class="btn-group" default="1"
+			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EVENT_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_EVENT_DESC">
+			<option value="0">JNO</option>
+            <option value="1">JYES</option>
+		</field>
+    </fieldset>
+    <fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+        <field name="rules" type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            validate="rules" filter="rules"
+            component="com_useractivity" section="component"
+        />
+    </fieldset>
+</config>

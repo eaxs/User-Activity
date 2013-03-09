@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="2.5" method="upgrade">
+    <name>User Activity</name>
+    <packagename>useractivity</packagename>
+    <version>1.0.0a1</version>
+    <url>http://www.projectfork.net</url>
+    <creationDate>March 2013</creationDate>
+    <copyright>(C) 2013 Tobias Kuhn. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <authorEmail>support@projectfork.net</authorEmail>
+    <authorUrl>www.projectfork.net</authorUrl>
+    <author>Tobias Kuhn</author>
+    <packager>Projectfork</packager>
+    <packagerurl>http://www.projectfork.net</packagerurl>
+    <description></description>
+    <files>
+        <!-- Install component -->
+        <file type="component" id="com_useractivity" method="upgrade">components/com_useractivity</file>
+
+        <!-- Install plugins -->
+        <file type="plugin" id="useractivity" group="content" method="upgrade">plugins/plg_content_useractivity</file>
+
+        <!-- Install modules -->
+        <file type="module" id="mod_useractivity_admin" client="administrator" method="upgrade">modules/mod_useractivity_admin</file>
+        <file type="module" id="mod_useractivity_site" client="site" method="upgrade">modules/mod_useractivity_site</file>
+    </files>
+</extension>

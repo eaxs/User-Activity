@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="2.5" method="upgrade">
+    <name>com_useractivity</name>
+    <author>Tobias Kuhn</author>
+    <creationDate>March 2013</creationDate>
+    <copyright>(C) 2013 Tobias Kuhn. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>support@projectfork.net</authorEmail>
+    <authorUrl>www.projectfork.net</authorUrl>
+    <version>1.0.0a1</version>
+    <description>COM_USERACTIVITY_XML_DESCRIPTION</description>
+    <install folder="admin">
+        <sql>
+            <file driver="mysql" charset="utf8">_install/mysql/structure.sql</file>
+            <file driver="mysql" charset="utf8">_install/mysql/data.sql</file>
+        </sql>
+    </install>
+    <uninstall folder="admin">
+        <sql>
+            <file driver="mysql" charset="utf8">_uninstall/mysql/data.sql</file>
+            <file driver="mysql" charset="utf8">_uninstall/mysql/structure.sql</file>
+        </sql>
+    </uninstall>
+    <files folder="site">
+        <folder>views</folder>
+        <filename>useractivity.php</filename>
+        <filename>controller.php</filename>
+        <filename>LICENSE.txt</filename>
+        <filename>index.html</filename>
+    </files>
+    <languages folder="site">
+        <language tag="en-GB">language/en-GB/en-GB.com_useractivity.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.com_useractivity.sys.ini</language>
+    </languages>
+    <administration>
+        <files folder="admin">
+            <folder>_install</folder>
+            <folder>_uninstall</folder>
+            <folder>controllers</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>useractivity.php</filename>
+            <filename>controller.php</filename>
+            <filename>LICENSE.txt</filename>
+            <filename>index.html</filename>
+        </files>
+        <languages folder="admin">
+            <language tag="en-GB">language/en-GB/en-GB.com_useractivity.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_useractivity.sys.ini</language>
+        </languages>
+    </administration>
+    <media folder="media" destination="com_useractivity">
+        <filename>index.html</filename>
+        <folder>js</folder>
+    </media>
+</extension>

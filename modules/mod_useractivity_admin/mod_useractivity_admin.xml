@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="administrator">
+    <name>mod_useractivity_admin</name>
+    <author>Tobias Kuhn</author>
+    <creationDate>March 2013</creationDate>
+    <copyright>Copyright (C) 2013 Tobias Kuhn. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <authorEmail>support@projectfork.net</authorEmail>
+    <authorUrl>www.projectfork.net</authorUrl>
+    <version>1.0.0a1</version>
+    <description>MOD_USERACTIVITY_ADMIN_XML_DESCRIPTION</description>
+    <files>
+        <filename module="mod_useractivity_admin">mod_useractivity_admin.php</filename>
+        <filename>helper.php</filename>
+        <filename>LICENSE.txt</filename>
+        <filename>index.html</filename>
+        <folder>tmpl</folder>
+    </files>
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.mod_useractivity_admin.ini</language>
+        <language tag="en-GB">language/en-GB/en-GB.mod_useractivity_admin.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+            <fieldset name="basic" addfieldpath="administrator/components/com_useractivity/models/fields">
+                <field name="list_limit" type="text" default="20" class="inputbox input-small"
+                    label="MOD_USERACTIVITY_ADMIN_FIELD_LIST_LIMIT_LABEL" description="MOD_USERACTIVITY_ADMIN_FIELD_LIST_LIMIT_DESC"
+                />
+                <field
+                    name="date_format" type="text" size="15"
+                    label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"
+                />
+                <field
+                    name="group_activity" type="list" default=""
+                    label="MOD_USERACTIVITY_ADMIN_CONFIG_GROUP_ACTIVITY_LABEL" description="MOD_USERACTIVITY_ADMIN_CONFIG_GROUP_ACTIVITY_DESC"
+                    >
+                        <option value="">JGLOBAL_USE_GLOBAL</option>
+                        <option value="0">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_0</option>
+                        <option value="1">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_1</option>
+                        <option value="5">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_5</option>
+                        <option value="15">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_15</option>
+                        <option value="30">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_30</option>
+                        <option value="60">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_60</option>
+                </field>
+                <field name="filter_author_id" type="list" default="0"
+                    label="MOD_USERACTIVITY_ADMIN_FIELD_AUTHORS_LABEL" description="MOD_USERACTIVITY_ADMIN_FIELD_AUTHORS_DESC">
+                    <option value="0">MOD_USERACTIVITY_ADMIN_FIELD_VALUE_ANYONE</option>
+                    <option value="by_me">MOD_USERACTIVITY_ADMIN_FIELD_VALUE_BY_ME</option>
+                    <option value="not_me">MOD_USERACTIVITY_ADMIN_FIELD_VALUE_NOT_BY_ME</option>
+                </field>
+                <field name="filter_client_id" type="list" default="1"
+                    label="MOD_USERACTIVITY_ADMIN_FIELD_LOCATION_LABEL" description="MOD_USERACTIVITY_ADMIN_FIELD_LOCATION_DESC">
+                    <option value="0">JSITE</option>
+                    <option value="1">JADMINISTRATOR</option>
+                </field>
+                <field name="filter_extension" type="uaextension" default=""
+                    label="MOD_USERACTIVITY_ADMIN_FIELD_EXTENSION_LABEL" description="MOD_USERACTIVITY_ADMIN_FIELD_EXTENSION_DESC"
+                    multiple="true" size="10"
+                    >
+                        <option value="">JOPTION_ALL_EXTENSIONS</option>
+                </field>
+            </fieldset>
+            <fieldset name="advanced">
+                <field name="layout" type="modulelayout"
+                    label="JFIELD_ALT_LAYOUT_LABEL" description="JFIELD_ALT_MODULE_LAYOUT_DESC"
+                />
+                <field name="moduleclass_sfx" type="text"
+                    label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC"
+                />
+                <field name="cache" type="list" default="0"
+                    label="COM_MODULES_FIELD_CACHING_LABEL" description="COM_MODULES_FIELD_CACHING_DESC"
+                >
+                    <option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+                </field>
+                <field
+                    name="load_jquery" type="radio" default="1" class="btn-group"
+                    label="MOD_USERACTIVITY_ADMIN_CONFIG_LOAD_JQUERY_LABEL" description="MOD_USERACTIVITY_ADMIN_CONFIG_LOAD_JQUERY_DESC"
+                    >
+                        <option value="0">JNO</option>
+                        <option value="1">JYES</option>
+                </field>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
