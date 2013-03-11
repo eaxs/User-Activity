@@ -18,16 +18,12 @@ if (!$date_format) $date_format = JText::_('DATE_FORMAT_LC1');
 foreach ($data['items'] AS $item)
 {
     $html = '<div class="row-fluid" style="display:none;">'
-          . '    <div class="span9">'
-          . '        <strong class="row-title">'
-          .              $item->text
-          . '        </strong>'
-          . '    </div>'
-          . '    <div class="span3">'
-          . '        <span class="small"><i class="icon-calendar"></i>'
-          .              JHtml::_('date', $item->created, $date_format)
-          . '        </span>'
-          . '    </div>'
+          . '<div class="span12">'
+          . '<strong class="row-title">' . $item->text . '</strong>'
+          . '<p class="small"><i class="icon-calendar"></i> '
+          . JHtml::_('date', $item->created, $date_format)
+          . '</p>'
+          . '</div>'
           . '</div>';
 
     $items[] = $html;
