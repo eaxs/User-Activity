@@ -26,7 +26,7 @@ class UserActivityModelActivities extends JModelList
     /**
      * Config option of whether to group activity or not
      *
-     * @var    integer
+     * @var    integer    
      */
     protected $group_activity;
 
@@ -72,20 +72,20 @@ class UserActivityModelActivities extends JModelList
         if (JDEBUG) JProfiler::getInstance('Application')->mark('beforeUserActivityGetItems');
 
         // Get the items from the database
-		$store = $this->getStoreId();
+        $store = $this->getStoreId();
 
-		// Try to load the data from internal storage.
-		if (isset($this->cache[$store])) return $this->cache[$store];
+        // Try to load the data from internal storage.
+        if (isset($this->cache[$store])) return $this->cache[$store];
 
-		// Load the list items.
-		$query = $this->_getListQuery();
-		$items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
+        // Load the list items.
+        $query = $this->_getListQuery();
+        $items = $this->_getList($query, $this->getStart(), $this->getState('list.limit'));
 
-		// Check for a database error.
-		if ($this->_db->getErrorNum()) {
-			$this->setError($this->_db->getErrorMsg());
-			return false;
-		}
+        // Check for a database error.
+        if ($this->_db->getErrorNum()) {
+            $this->setError($this->_db->getErrorMsg());
+            return false;
+        }
 
         if (!is_array($items)) $items = array();
 
@@ -103,11 +103,11 @@ class UserActivityModelActivities extends JModelList
         }
 
         // Add the items to the internal cache.
-		$this->cache[$store] = $items;
+        $this->cache[$store] = $items;
 
         if (JDEBUG) JProfiler::getInstance('Application')->mark('afterUserActivityGetItems');
 
-		return $this->cache[$store];
+        return $this->cache[$store];
     }
 
 
@@ -348,7 +348,7 @@ class UserActivityModelActivities extends JModelList
      * @param     string    $ordering     An optional ordering field.
      * @param     string    $direction    An optional direction (asc|desc).
      *
-     * @return    void
+     * @return    void                    
      */
     protected function populateState($ordering = 'a.created', $direction = 'desc')
     {
