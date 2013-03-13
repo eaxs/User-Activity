@@ -26,7 +26,7 @@ class UserActivityModelActivities extends JModelList
     /**
      * Config option of whether to group activity or not
      *
-     * @var    integer    
+     * @var    integer
      */
     protected $group_activity;
 
@@ -348,7 +348,7 @@ class UserActivityModelActivities extends JModelList
      * @param     string    $ordering     An optional ordering field.
      * @param     string    $direction    An optional direction (asc|desc).
      *
-     * @return    void                    
+     * @return    void
      */
     protected function populateState($ordering = 'a.created', $direction = 'desc')
     {
@@ -474,7 +474,7 @@ class UserActivityModelActivities extends JModelList
                 )
             );
 
-            $query->select('i.asset_id, i.xref_id, i.id AS item_id, i.title');
+            $query->select('i.asset_id, i.xref_id, i.id AS item_id, i.title, i.metadata');
             $query->select('t.id AS type_id, t.plugin, t.extension, t.name');
             $query->select('ae.id AS asset_exists');
             $query->select('ev.name AS event_name');

@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `#__user_activity_items` (
   `xref_id` int(10) unsigned NOT NULL COMMENT 'Cross Reference ID. Plugin controlled',
   `id` int(10) unsigned NOT NULL COMMENT 'The id of the item itself',
   `title` varchar(255) NOT NULL COMMENT 'Last known item title',
+  `metadata` varchar(1530) NOT NULL COMMENT 'Item meta info such as category title',
   PRIMARY KEY (`asset_id`),
   KEY `idx_type_id` (`type_id`),
   KEY `idx_xref_id` (`xref_id`)

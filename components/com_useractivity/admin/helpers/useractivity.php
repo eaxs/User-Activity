@@ -37,7 +37,7 @@ class UserActivityHelper
             $data->text = '';
 
             if (!isset($data->plugin) || empty($data->plugin)) {
-                return $item;
+                return $data;
             }
 
             list($type, $name) = explode('.', $data->plugin, 2);
@@ -45,7 +45,7 @@ class UserActivityHelper
             // Get the plugin
             $plugin = self::getPluginHelper($name, $type);
 
-            if (!$plugin) return $item;
+            if (!$plugin) return $data;
 
             // Return translated item
             return $plugin->translateItem($data);
