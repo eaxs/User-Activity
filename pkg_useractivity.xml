@@ -19,6 +19,7 @@
 
         <!-- Install plugins -->
         <file type="plugin" id="useractivity" group="content" method="upgrade">plugins/plg_content_useractivity</file>
+        <file type="plugin" id="content" group="useractivity" method="upgrade">plugins/plg_useractivity_content</file>
 
         <!-- Install modules -->
         <file type="module" id="mod_useractivity_admin" client="administrator" method="upgrade">modules/mod_useractivity_admin</file>
