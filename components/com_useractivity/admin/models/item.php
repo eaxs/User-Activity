@@ -129,11 +129,13 @@ class UserActivityModelItem extends JModelAdmin
             if (!$data['asset_id']) return false;
         }
 
-        // Check if we can update on the fly
+        /**
+         * Check if we can update on the fly
+         */
         $query = $this->_db->getQuery(true);
 
         // Load the item by asset id
-        $query->select('type_id, xref_id, title, metadata')
+        $query->select('type_id, xref_id, title, state, access, metadata')
               ->from('#__user_activity_items')
               ->where('asset_id = ' . (int) $data['asset_id']);
 
@@ -158,6 +160,18 @@ class UserActivityModelItem extends JModelAdmin
                 $update = true;
             }
 
+            // Check for changed state
+            if (isset($data['state']) && $row['state'] != $data['state']) {
+                $obj->state = $data['state'];
+                $update = true;
+            }
+
+            // Check for changed access
+            if (isset($data['access']) && $row['access'] != $data['access']) {
+                $obj->access = $data['access'];
+                $update = true;
+            }
+
             // Check for changed meta data
             $meta = (string) $data['metadata'];
             if ($meta != $row['metadata']) {
@@ -179,6 +193,11 @@ class UserActivityModelItem extends JModelAdmin
             return true;
         }
 
+
+        /**
+         * Create new record
+         */
+
         // Get item type if not set
         if (!isset($data['type_id']) || empty($data['type_id'])) {
             $data['type_id'] = $this->getType($data['extension'], $data['name'], $data['plugin']);
@@ -186,13 +205,14 @@ class UserActivityModelItem extends JModelAdmin
             if (!$data['type_id']) return false;
         }
 
-        // Create new record
         $obj = new stdClass();
         $obj->asset_id = (int) $data['asset_id'];
         $obj->type_id  = (int) $data['type_id'];
         $obj->xref_id  = (isset($data['xref_id']) ? (int) $data['xref_id']: 0);
         $obj->id       = (int) $data['id'];
         $obj->title    = $data['title'];
+        $obj->state    = (isset($data['state']) ? (int) $data['state']: 1);
+        $obj->access   = $data['access'];
         $obj->metadata = (string) $data['metadata'];
 
         if (!$this->_db->insertObject('#__user_activity_items', $obj, 'asset_id')) {
@@ -201,58 +221,6 @@ class UserActivityModelItem extends JModelAdmin
 
         $this->setState($this->getName() . '.id',   $obj->asset_id);
         $this->setState($this->getName() . '.type', $obj->type_id);
-        $this->setState($this->getName() . '.new', true);
-
-        return true;
-
-        $table  = $this->getTable();
-        $key    = $table->getKeyName();
-        $is_new = true;
-
-        // Reset the table
-        $table->reset();
-        $table->$key = null;
-
-        // Allow an exception to be thrown.
-        try
-        {
-            // Bind the data.
-            if (!$table->bind($data)) {
-                $this->setError($table->getError());
-                return false;
-            }
-
-            // Prepare the row for saving
-            $this->prepareTable($table);
-
-            // Check the data.
-            if (!$table->check()) {
-                $this->setError($table->getError());
-                return false;
-            }
-
-            // Store the data.
-            if (!$table->store()) {
-                $this->setError($table->getError());
-                return false;
-            }
-
-            // Clean the cache.
-            $this->cleanCache();
-        }
-        catch (Exception $e)
-        {
-            $this->setError($e->getMessage());
-            return false;
-        }
-
-        $pkName = $table->getKeyName();
-
-        if (isset($table->$pkName)) {
-            $this->setState($this->getName() . '.id', $table->$pkName);
-        }
-
-        $this->setState($this->getName() . '.type', (int) $table->type_id);
         $this->setState($this->getName() . '.new', true);
 
         return true;

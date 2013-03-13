@@ -34,14 +34,16 @@ class plgUserActivityContentCategory extends plgUserActivity
         if (!$item) return false;
 
         // Set the data
-        $this->item_data['title']      = $item->title;
-        $this->item_data['asset_id']   = $item->asset_id;
-
-        // Set meta data
-        $this->item_data['metadata']->set('alias', $item->alias);
+        $this->item_data['title']    = $item->title;
+        $this->item_data['asset_id'] = $item->asset_id;
+        $this->item_data['state']    = $item->state;
+        $this->item_data['access']   = $item->access;
 
         // Set activity access
         $this->activity_data['access'] = $item->access;
+
+        // Set meta data
+        $this->item_data['metadata']->set('alias', $item->alias);
     }
 
 
@@ -62,7 +64,7 @@ class plgUserActivityContentCategory extends plgUserActivity
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('asset_id, title, alias, access')
+        $query->select('asset_id, title, alias, state, access')
               ->from('#__categories')
               ->where('id = ' . $db->quote((int) $id));
 

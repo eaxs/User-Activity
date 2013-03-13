@@ -474,7 +474,8 @@ class UserActivityModelActivities extends JModelList
                 )
             );
 
-            $query->select('i.asset_id, i.xref_id, i.id AS item_id, i.title, i.metadata');
+            $query->select('i.asset_id, i.xref_id, i.id AS item_id, i.title,'
+                          . 'i.state AS item_state, i.access AS item_access, i.metadata');
             $query->select('t.id AS type_id, t.plugin, t.extension, t.name');
             $query->select('ae.id AS asset_exists');
             $query->select('ev.name AS event_name');

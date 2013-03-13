@@ -247,8 +247,14 @@ class plgUserActivity extends JPlugin
         // Set the item asset id
         $this->item_data['asset_id'] = (isset($table->asset_id) ? (int) $table->asset_id : 0);
 
+        // Set the item state
+        $this->item_data['state'] = (isset($table->state) ? (int) $table->state : 1);
+
+        // Set the item access
+        $this->item_data['access'] = (isset($table->access) ? (int) $table->access : (int) JFactory::getConfig()->get('access'));
+
         // Set the activity access
-        $this->activity_data['access'] = (isset($table->access) ? (int) $table->access : (int) JFactory::getConfig()->get('access'));
+        $this->activity_data['access'] = $this->item_data['access'];
 
         // Set item meta data
         if (isset($table->alias)) {
@@ -268,7 +274,8 @@ class plgUserActivity extends JPlugin
     protected function setDataFromItemState($id, $state)
     {
         // Set the id of the item
-        $this->item_data['id'] = (int) $id;
+        $this->item_data['id']    = (int) $id;
+        $this->item_data['state'] = (int) $state;
     }
 
 

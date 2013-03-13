@@ -256,6 +256,12 @@ class plgUserActivityHelper
     {
         $asset = $this->item->extension . '.' . $this->item->name . '.' . $this->item->item_id;
 
+        if ($this->item->item_state != '1' && $this->client_id == 0) {
+            if (!$this->user->authorise('core.edit.state', $asset)) {
+                return false;
+            }
+        }
+
         return ($this->client_id ? $this->user->authorise('core.edit', $asset) : true);
     }
 }

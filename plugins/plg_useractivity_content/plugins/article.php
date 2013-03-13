@@ -110,14 +110,16 @@ class plgUserActivityContentArticle extends plgUserActivity
         $this->item_data['title']      = $item->title;
         $this->item_data['asset_id']   = $item->asset_id;
         $this->item_data['xref_id']    = $item->catid;
+        $this->item_data['state']      = $item->state;
+        $this->item_data['access']     = $item->access;
+
+        // Set activity access
+        $this->activity_data['access'] = $item->access;
 
         // Set meta data
         $this->item_data['metadata']->set('alias', $item->alias);
         $this->item_data['metadata']->set('cat_alias', $item->cat_alias);
         $this->item_data['metadata']->set('cat_title', $item->cat_title);
-
-        // Set activity access
-        $this->activity_data['access'] = $item->access;
     }
 
 
@@ -138,7 +140,7 @@ class plgUserActivityContentArticle extends plgUserActivity
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('a.asset_id, a.catid, a.title, a.alias, a.access')
+        $query->select('a.asset_id, a.catid, a.title, a.alias, a.state, a.access')
               ->select('c.title AS cat_title, c.alias AS cat_alias')
               ->from('#__content AS a')
               ->join('left', '#__categories AS c ON c.id = a.catid')
