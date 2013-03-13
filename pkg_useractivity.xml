@@ -2,7 +2,7 @@
 <extension type="package" version="2.5" method="upgrade">
     <name>User Activity</name>
     <packagename>useractivity</packagename>
-    <version>1.0.0a1</version>
+    <version>1.0.0</version>
     <url>http://www.projectfork.net</url>
     <creationDate>March 2013</creationDate>
     <copyright>(C) 2013 Tobias Kuhn. All rights reserved.</copyright>
