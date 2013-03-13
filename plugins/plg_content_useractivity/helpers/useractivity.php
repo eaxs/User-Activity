@@ -51,6 +51,13 @@ class plgUserActivityHelper
      */
     protected $cache_token = array();
 
+    /**
+     * Current activity record that's being translated
+     *
+     * @var    object
+     */
+    protected $item = null;
+
 
     /**
      * Constructor
@@ -72,6 +79,13 @@ class plgUserActivityHelper
      */
     public function translateItem($item)
     {
+        $this->item = $item;
+
+        // Load meta data into JRegistry
+        $metadata = $this->item->metadata;
+        $this->item->metadata = new JRegistry();
+        $this->item->metadata->loadString($metadata);
+
         $key = strtoupper($item->extension) . '_UA_' . strtoupper($item->name) . '_' . strtoupper($item->event_name);
 
         // Check cache
@@ -82,8 +96,8 @@ class plgUserActivityHelper
         // Translate
         $item->text = sprintf(
             $this->cache_token[$key],
-            $this->getUserName($item->created_by, $item->author_name),
-            $this->getTitle($item->extension, $item->name, $item->item_id, $item->title, $item->asset_exists)
+            $this->getUserName(),
+            $this->getTitle()
         );
 
         return $item;
@@ -108,8 +122,22 @@ class plgUserActivityHelper
 
         foreach ($group AS $el)
         {
-            $titles[] = $this->getTitle($el->extension, $el->name, $el->item_id, $el->title, $el->asset_exists);
+            $this->item = $el;
+
+            // Load meta data into JRegistry
+            $metadata = $this->item->metadata;
+            $this->item->metadata = new JRegistry();
+            $this->item->metadata->loadString($metadata);
+
+            $titles[] = $this->getTitle();
         }
+
+        $this->item = $item;
+
+        // Load meta data into JRegistry
+        $metadata = $this->item->metadata;
+        $this->item->metadata = new JRegistry();
+        $this->item->metadata->loadString($metadata);
 
         // Check cache
         if (!isset($this->cache_token[$tkey])) {
@@ -119,7 +147,7 @@ class plgUserActivityHelper
         // Translate
         $item->text = sprintf(
             $this->cache_token[$tkey],
-            $this->getUserName($item->created_by, $item->author_name),
+            $this->getUserName(),
             count($group),
             implode(', ', $titles)
         );
@@ -131,50 +159,47 @@ class plgUserActivityHelper
     /**
      * Method to translate a user name, adding a link to it if possible
      *
-     * @param     integer    $id      The user id
-     * @param     integer    $name    The user name
-     *
      * @return    string              The translated user name
      */
-    protected function getUserName($id, $name = null)
+    protected function getUserName()
     {
         // Check the cache
-        if (isset($this->cache_user[$id])) {
-            return $this->cache_user[$id];
+        if (isset($this->cache_user[$this->item->created_by])) {
+            return $this->cache_user[$this->item->created_by];
         }
 
-        if ($this->getUserAccess($id)) {
-            $this->cache_user[$id] = '<a href="' . $this->getUserLink($id) . '">' . htmlspecialchars($name, ENT_COMPAT, 'UTF-8') . '</a>';
+        if ($this->getUserAccess()) {
+            $this->cache_user[$this->item->created_by] = '<a href="' . $this->getUserLink() . '">' . htmlspecialchars($this->item->author_name, ENT_COMPAT, 'UTF-8') . '</a>';
         }
         else {
-            $this->cache_user[$id] = htmlspecialchars($name, ENT_COMPAT, 'UTF-8');
+            $this->cache_user[$this->item->created_by] = htmlspecialchars($this->item->author_name, ENT_COMPAT, 'UTF-8');
         }
 
-        return $this->cache_user[$id];
+        return $this->cache_user[$this->item->created_by];
     }
 
 
     /**
      * Method to get the link to a user profile
      *
-     * @param     integer    $id    The user id
-     *
      * @return    string            The link to the profile
      */
-    protected function getUserLink($id)
+    protected function getUserLink()
     {
-        return JRoute::_('index.php?option=com_users&' . ($this->client_id ? 'task=user.edit' : 'view=profile') . '&id=' . (int) $id);
+        $link = 'index.php?option=com_users&'
+              . ($this->client_id ? 'task=user.edit' : 'view=profile')
+              . '&id=' . (int) $this->item->created_by;
+
+        return JRoute::_($link);
     }
 
 
     /**
      * Method to get check if the current user can access the acting user's profile
      *
-     * @param     integer    $id    The user id
-     *
      * @return    boolean           True if access granted, False if not
      */
-    protected function getUserAccess($id)
+    protected function getUserAccess()
     {
         return ($this->client_id ? $this->user->authorise('core.edit', 'com_users') : true);
     }
@@ -183,44 +208,54 @@ class plgUserActivityHelper
     /**
      * Method to translate an activity item title, adding a link to it if possible
      *
-     * @param     string     $ext       The extension name
-     * @param     string     $name      The extension item name
-     * @param     integer    $id        The activity id
-     * @param     string     $title     The activity title (Optional)
-     * @param     integer    $exists    Whether the asset exists or not
-     *
      * @return    string                The translated and formatted title
      */
-    protected function getTitle($ext, $name, $id, $title = null, $exists = 0)
+    protected function getTitle()
     {
         // Check the cache
-        $key = $name . '.' . $id;
+        $key = $this->item->name . '.' . $this->item->item_id;
 
         if (isset($this->cache_title[$key])) {
             return $this->cache_title[$key];
         }
 
-        $access = (($exists > 0) ? $this->getTitleAccess($ext, $name, $id) : false);
+        $access = (($this->item->asset_exists > 0) ? $this->getTitleAccess() : false);
 
         if ($access) {
-            $this->cache_title[$key] = '<a href="' . $this->getTitleLink($ext, $name, $id) . '">' . htmlspecialchars($title, ENT_COMPAT, 'UTF-8') . '</a>';
+            $this->cache_title[$key] = '<a href="' . $this->getTitleLink() . '">' . htmlspecialchars($this->item->title, ENT_COMPAT, 'UTF-8') . '</a>';
         }
         else {
-            $this->cache_title[$key] = htmlspecialchars($title, ENT_COMPAT, 'UTF-8');
+            $this->cache_title[$key] = htmlspecialchars($this->item->title, ENT_COMPAT, 'UTF-8');
         }
 
         return $this->cache_title[$key];
     }
 
 
-    protected function getTitleLink($ext, $name, $id)
+    /**
+     * Method to get the item title link
+     *
+     * @return    string              The title link
+     */
+    protected function getTitleLink()
     {
-        return JRoute::_('index.php?option=' . $ext . '&' . ($this->client_id ? 'task=' . $name . '.edit' : 'view=' . $name) . '&id=' . (int) $id);
+        $link = 'index.php?option=' . $this->item->extension . '&'
+              . ($this->client_id ? 'task=' . $this->item->name . '.edit' : 'view=' . $this->item->name)
+              . '&id=' . (int) $this->item->item_id;
+
+        return JRoute::_($link);
     }
 
 
-    protected function getTitleAccess($ext, $name, $id)
+    /**
+     * Method to check the access to an item
+     *
+     * @return    boolean             True on auth, False if not
+     */
+    protected function getTitleAccess()
     {
-        return ($this->client_id ? $this->user->authorise('core.edit', $ext . '.' . $name . '.' . $id) : true);
+        $asset = $this->item->extension . '.' . $this->item->name . '.' . $this->item->item_id;
+
+        return ($this->client_id ? $this->user->authorise('core.edit', $asset) : true);
     }
 }

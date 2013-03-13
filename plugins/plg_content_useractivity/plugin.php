@@ -249,6 +249,11 @@ class plgUserActivity extends JPlugin
 
         // Set the activity access
         $this->activity_data['access'] = (isset($table->access) ? (int) $table->access : (int) JFactory::getConfig()->get('access'));
+
+        // Set item meta data
+        if (isset($table->alias)) {
+            $this->item_data['metadata']->set('alias', $table->alias);
+        }
     }
 
 
@@ -342,7 +347,10 @@ class plgUserActivity extends JPlugin
     protected function resetData()
     {
         $this->activity_data = array('id' => null);
-        $this->item_data     = array('asset_id' => null, 'plugin' => $this->_type . '.' . $this->_name);
+        $this->item_data     = array(
+            'asset_id' => null,
+            'plugin'   => $this->_type . '.' . $this->_name,
+            'metadata' => new JRegistry());
 
         if ($this->activity_model) {
             $this->activity_model->setState($this->activity_model->getName() . '.id', null);
