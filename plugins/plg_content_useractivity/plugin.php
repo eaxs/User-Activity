@@ -248,7 +248,7 @@ class plgUserActivity extends JPlugin
         $this->item_data['asset_id'] = (isset($table->asset_id) ? (int) $table->asset_id : 0);
 
         // Set the item state
-        $this->item_data['state'] = (isset($table->state) ? (int) $table->state : 1);
+        $this->item_data['state'] = (isset($table->state) ? (int) $table->state : (isset($table->published) ? (int) $table->published : 1));
 
         // Set the item access
         $this->item_data['access'] = (isset($table->access) ? (int) $table->access : (int) JFactory::getConfig()->get('access'));
