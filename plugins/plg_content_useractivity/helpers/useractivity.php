@@ -24,6 +24,13 @@ class plgUserActivityHelper
     protected $user;
 
     /**
+     * User link destination
+     *
+     * @param    string
+     */
+    protected $user_link;
+
+    /**
      * Current user location
      *
      * @var    integer
@@ -63,10 +70,20 @@ class plgUserActivityHelper
      * Constructor
      *
      */
-    public function __construct()
+    public function __construct($config = array())
     {
         $this->user = JFactory::getUser();
         $this->client_id = (JFactory::getApplication()->isAdmin() ? 1 : 0);
+
+        // Set the user link integration
+        if (isset($config['user_link'])) {
+            $this->user_link = $config['user_link'];
+        }
+
+        // Override link to joomla when in backend
+        if ($this->client_id) {
+            $this->user_link = 'joomla';
+        }
     }
 
 
@@ -168,7 +185,7 @@ class plgUserActivityHelper
             return $this->cache_user[$this->item->created_by];
         }
 
-        if ($this->getUserAccess()) {
+        if ($this->getUserAccess() && ($this->user_link != 'nolink')) {
             $this->cache_user[$this->item->created_by] = '<a href="' . $this->getUserLink() . '">' . htmlspecialchars($this->item->author_name, ENT_COMPAT, 'UTF-8') . '</a>';
         }
         else {
@@ -186,9 +203,15 @@ class plgUserActivityHelper
      */
     protected function getUserLink()
     {
-        $link = 'index.php?option=com_users&'
-              . ($this->client_id ? 'task=user.edit' : 'view=profile')
-              . '&id=' . (int) $this->item->created_by;
+        if ($this->user_link == 'joomla' || empty($this->user_link)) {
+            $link = 'index.php?option=com_users&'
+                  . ($this->client_id ? 'task=user.edit' : 'view=profile')
+                  . '&id=' . (int) $this->item->created_by
+                  . ($this->client_id ? '' : ':' . $this->item->username);
+        }
+        else {
+            $link = UserActivityHelperUserLink::get($this->item->created_by, $this->item->username, $this->user_link);
+        }
 
         return JRoute::_($link);
     }

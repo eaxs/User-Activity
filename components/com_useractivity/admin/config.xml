@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset name="shared" label="COM_USERACTIVITY_CONFIG_SHARED_SETTINGS_LABEL" description="COM_USERACTIVITY_CONFIG_SHARED_SETTINGS_DESC">
-        <field
-            name="group_activity" type="list" default="5"
+        <field name="group_activity" type="list" default="5"
             label="COM_USERACTIVITY_CONFIG_GROUP_ACTIVITY_LABEL" description="COM_USERACTIVITY_CONFIG_GROUP_ACTIVITY_DESC"
             >
                 <option value="0">COM_USERACTIVITY_FIELD_OPTION_PERIOD_0</option>
@@ -18,6 +17,16 @@
         />
     </fieldset>
     <fieldset name="frontend" label="COM_USERACTIVITY_CONFIG_FRONTEND_SETTINGS_LABEL" description="COM_USERACTIVITY_CONFIG_FRONTEND_SETTINGS_DESC">
+        <field name="user_link" type="list" default="joomla"
+            label="COM_USERACTIVITY_CONFIG_USER_LINK_LABEL" description="COM_USERACTIVITY_CONFIG_USER_LINK_DESC"
+            >
+                <option value="nolink">COM_USERACTIVITY_FIELD_OPTION_NOLINK</option>
+                <option value="joomla">COM_USERACTIVITY_FIELD_OPTION_JOOMLA</option>
+                <option value="cb">COM_USERACTIVITY_FIELD_OPTION_CB</option>
+                <option value="jomsocial">COM_USERACTIVITY_FIELD_OPTION_JOMSOCIAL</option>
+                <option value="kunena">COM_USERACTIVITY_FIELD_OPTION_KUNENA</option>
+                <option value="projectfork">COM_USERACTIVITY_FIELD_OPTION_PROJECTFORK</option>
+        </field>
         <field name="show_filter_search" type="radio" class="btn-group" default="1"
 			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_DESC">
 			<option value="0">JNO</option>

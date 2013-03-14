@@ -52,6 +52,10 @@ abstract class modUserActivitySiteHelper
             $config['group_activity'] = (int) $params->get('group_activity');
         }
 
+        if ($params->get('user_link') != '') {
+            $config['user_link'] = $params->get('user_link');
+        }
+
         // Get the model
         $model = self::getModel($config);
 

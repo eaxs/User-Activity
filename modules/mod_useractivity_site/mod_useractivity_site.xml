@@ -42,13 +42,24 @@
                         <option value="30">MOD_USERACTIVITY_SITE_FIELD_OPTION_PERIOD_30</option>
                         <option value="60">MOD_USERACTIVITY_SITE_FIELD_OPTION_PERIOD_60</option>
                 </field>
+                <field name="user_link" type="list" default=""
+                    label="MOD_USERACTIVITY_SITE_CONFIG_USER_LINK_LABEL" description="MOD_USERACTIVITY_SITE_CONFIG_USER_LINK_DESC"
+                    >
+                        <option value="">JGLOBAL_USE_GLOBAL</option>
+                        <option value="nolink">MOD_USERACTIVITY_SITE_FIELD_OPTION_NOLINK</option>
+                        <option value="joomla">MOD_USERACTIVITY_SITE_FIELD_OPTION_JOOMLA</option>
+                        <option value="cb">MOD_USERACTIVITY_SITE_FIELD_OPTION_CB</option>
+                        <option value="jomsocial">MOD_USERACTIVITY_SITE_FIELD_OPTION_JOMSOCIAL</option>
+                        <option value="kunena">MOD_USERACTIVITY_SITE_FIELD_OPTION_KUNENA</option>
+                        <option value="projectfork">MOD_USERACTIVITY_SITE_FIELD_OPTION_PROJECTFORK</option>
+                </field>
                 <field name="filter_author_id" type="list" default="0"
                     label="MOD_USERACTIVITY_SITE_FIELD_AUTHORS_LABEL" description="MOD_USERACTIVITY_SITE_FIELD_AUTHORS_DESC">
                     <option value="0">MOD_USERACTIVITY_SITE_FIELD_VALUE_ANYONE</option>
                     <option value="by_me">MOD_USERACTIVITY_SITE_FIELD_VALUE_BY_ME</option>
                     <option value="not_me">MOD_USERACTIVITY_SITE_FIELD_VALUE_NOT_BY_ME</option>
                 </field>
-                <field name="filter_client_id" type="list" default="1"
+                <field name="filter_client_id" type="list" default="0"
                     label="MOD_USERACTIVITY_SITE_FIELD_LOCATION_LABEL" description="MOD_USERACTIVITY_SITE_FIELD_LOCATION_DESC">
                     <option value="0">JSITE</option>
                     <option value="1">JADMINISTRATOR</option>

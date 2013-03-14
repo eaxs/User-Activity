@@ -22,6 +22,25 @@ require_once JPATH_PLUGINS . '/content/useractivity/helpers/useractivity.php';
 class plgUserActivityContentHelper
 {
     /**
+     * Config options for the translation
+     *
+     * @var    array
+     */
+    protected $config;
+
+
+    /**
+     * Constructor
+     *
+     * @param    array   $config    Optional config options
+     */
+    public function __construct($config = array())
+    {
+        $this->config = $config;
+    }
+
+
+    /**
      * Method to translate an single activity record
      *
      * @param     object    $item    The record to translate
@@ -93,7 +112,7 @@ class plgUserActivityContentHelper
 
         require_once $file;
 
-        $cache[$name] = new $class();
+        $cache[$name] = new $class($this->config);
 
         return $cache[$name];
     }

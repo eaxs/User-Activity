@@ -30,6 +30,13 @@ class UserActivityModelActivities extends JModelList
      */
     protected $group_activity;
 
+    /**
+     * Config option for the user profile link destination
+     *
+     * @var    string
+     */
+    protected $user_link;
+
 
     /**
      * Constructor
@@ -38,7 +45,7 @@ class UserActivityModelActivities extends JModelList
      */
     public function __construct($config = array())
     {
-        $params = JComponentHelper::getParams('com_useractivity', true);
+        $params = JComponentHelper::getParams('com_useractivity');
 
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
@@ -51,7 +58,12 @@ class UserActivityModelActivities extends JModelList
             $config['group_activity'] = (int) $params->get('group_activity', 5);
         }
 
+        if (!isset($config['user_link'])) {
+            $config['user_link'] = $params->get('user_link', 'joomla');
+        }
+
         $this->group_activity = (int) $config['group_activity'];
+        $this->user_link      = $config['user_link'];
 
         parent::__construct($config);
     }
@@ -92,6 +104,7 @@ class UserActivityModelActivities extends JModelList
         // Translate items
         $count   = count($items);
         $clients = array('0' => JText::_('JSITE'), '1' => JText::_('JADMINISTRATOR'));
+        $config  = array('user_link' => $this->user_link);
 
         foreach ($items AS &$item)
         {
@@ -99,7 +112,7 @@ class UserActivityModelActivities extends JModelList
             $item->client = $clients[$item->client_id];
 
             // Translate the activity itself
-            $item = UserActivityHelper::translate($item);
+            $item = UserActivityHelper::translate($item, $config);
         }
 
         // Add the items to the internal cache.
@@ -176,12 +189,13 @@ class UserActivityModelActivities extends JModelList
 
         // Translate the items
         $clients = array(JText::_('JSITE'), JText::_('JADMINISTRATOR'));
+        $config  = array('user_link' => $this->user_link);
 
         foreach ($items AS &$item)
         {
             if (!is_array($item)) {
                 $item->client = $clients[$item->client_id];
-                $item = UserActivityHelper::translate($item);
+                $item = UserActivityHelper::translate($item, $config);
                 continue;
             }
 
@@ -191,10 +205,10 @@ class UserActivityModelActivities extends JModelList
 
             if (count($item) == 1) {
                 $key  = key($item);
-                $item = UserActivityHelper::translate($item[$key]);
+                $item = UserActivityHelper::translate($item[$key], $config);
             }
             else {
-                $item = UserActivityHelper::translate($item);
+                $item = UserActivityHelper::translate($item, $config);
             }
 
             $item->client = $clients[$item->client_id];
@@ -479,7 +493,7 @@ class UserActivityModelActivities extends JModelList
             $query->select('t.id AS type_id, t.plugin, t.extension, t.name');
             $query->select('ae.id AS asset_exists');
             $query->select('ev.name AS event_name');
-            $query->select('ua.name AS author_name');
+            $query->select('ua.name AS author_name, ua.username');
 
             $query->from('#__user_activity AS a');
 

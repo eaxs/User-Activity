@@ -10,6 +10,17 @@
                 name="date_format" type="text" size="15"
                 label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"
             />
+            <field name="user_link" type="list"
+                label="COM_USERACTIVITY_CONFIG_USER_LINK_LABEL" description="COM_USERACTIVITY_CONFIG_USER_LINK_DESC"
+                >
+                    <option value="">JGLOBAL_USE_GLOBAL</option>
+                    <option value="nolink">COM_USERACTIVITY_FIELD_OPTION_NOLINK</option>
+                    <option value="joomla">COM_USERACTIVITY_FIELD_OPTION_JOOMLA</option>
+                    <option value="cb">COM_USERACTIVITY_FIELD_OPTION_CB</option>
+                    <option value="jomsocial">COM_USERACTIVITY_FIELD_OPTION_JOMSOCIAL</option>
+                    <option value="kunena">COM_USERACTIVITY_FIELD_OPTION_KUNENA</option>
+                    <option value="projectfork">COM_USERACTIVITY_FIELD_OPTION_PROJECTFORK</option>
+            </field>
             <field name="show_filter_search" type="list"
     			label="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_LABEL" description="COM_USERACTIVITY_CONFIG_SHOW_FILTER_SEARCH_DESC">
     			<option value="">JGLOBAL_USE_GLOBAL</option>

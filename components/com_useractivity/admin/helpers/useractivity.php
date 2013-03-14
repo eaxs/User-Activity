@@ -11,6 +11,7 @@ defined('_JEXEC') or die();
 
 
 jimport('joomla.filesystem.path');
+require_once dirname(__FILE__) . '/userlink.php';
 
 
 /**
@@ -26,11 +27,12 @@ class UserActivityHelper
     /**
      * Method to translate an activity record
      *
-     * @param     mixed    $data    The record data to translate
+     * @param     mixed    $data      The record data to translate
+     * @param     array    $config    Optional config options for the translation helper
      *
-     * @return    mixed             The translated data
+     * @return    mixed               The translated data
      */
-    public static function translate($data)
+    public static function translate($data, $config = array())
     {
         if (is_object($data)) {
             // Default text
@@ -43,7 +45,7 @@ class UserActivityHelper
             list($type, $name) = explode('.', $data->plugin, 2);
 
             // Get the plugin
-            $plugin = self::getPluginHelper($name, $type);
+            $plugin = self::getPluginHelper($name, $type, $config);
 
             if (!$plugin) return $data;
 
@@ -81,10 +83,11 @@ class UserActivityHelper
      *
      * @param     string    $name      The name of the plugin
      * @param     string    $type      The plugin type (Optional)
+     * @param     array     $config    Config options (Optional)
      *
      * @return    mixed     $plugin    The plugin helper instance on success, Null if not found
      */
-    public static function getPluginHelper($name, $type = 'useractivity')
+    public static function getPluginHelper($name, $type = 'useractivity', $config = array())
     {
         static $plugins = array();
 
@@ -105,7 +108,7 @@ class UserActivityHelper
         // Create class instance
         $class_name = 'plg' . $type . $name . 'Helper';
 
-        $plugins[$cache] = new $class_name();
+        $plugins[$cache] = new $class_name($config);
 
         return $plugins[$cache];
     }
