@@ -64,7 +64,7 @@ class plgUserActivityContentCategory extends plgUserActivity
         $db    = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('asset_id, title, alias, state, access')
+        $query->select('asset_id, title, alias, published AS state, access')
               ->from('#__categories')
               ->where('id = ' . $db->quote((int) $id));
 
