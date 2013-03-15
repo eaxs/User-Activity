@@ -17,7 +17,7 @@ $list_dir    = $this->escape($this->state->get('list.direction'));
 $date_format = $this->params->get('date_format', JText::_('DATE_FORMAT_LC1'));
 $date_rel    = (int) $this->params->get('date_relative', 1);
 ?>
-<form action="<?php echo JRoute::_('index.php?option=com_useractivity&view=activities'); ?>" method="post" name="adminForm" id="adminForm" autocomplete="off">
+<form action="<?php echo JRoute::_(UserActivityHelperRoute::getActivitiesRoute()); ?>" method="post" name="adminForm" id="adminForm" autocomplete="off">
 
     <!-- Start Filters -->
     <div class="btn-toolbar">

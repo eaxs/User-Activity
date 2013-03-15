@@ -26,14 +26,14 @@ class UserActivityModelActivities extends JModelList
     /**
      * Config option of whether to group activity or not
      *
-     * @var    integer    
+     * @var    integer
      */
     protected $group_activity;
 
     /**
      * Config option for the user profile link destination
      *
-     * @var    string    
+     * @var    string
      */
     protected $user_link;
 
@@ -83,7 +83,7 @@ class UserActivityModelActivities extends JModelList
         }
 
         // Get grouped?
-        if ($this->group_activity > 0) {
+        if ($this->group_activity > 0 && $this->getState('list.format') != 'feed') {
             return $this->getItemsGrouped();
         }
 
@@ -110,7 +110,7 @@ class UserActivityModelActivities extends JModelList
         // Translate items
         $count   = count($items);
         $clients = array('0' => JText::_('JSITE'), '1' => JText::_('JADMINISTRATOR'));
-        $config  = array('user_link' => $this->user_link);
+        $config  = array('user_link' => $this->user_link, 'format' => $this->getState('list.format'));
 
         foreach ($items AS &$item)
         {
@@ -368,16 +368,22 @@ class UserActivityModelActivities extends JModelList
      * @param     string    $ordering     An optional ordering field.
      * @param     string    $direction    An optional direction (asc|desc).
      *
-     * @return    void                    
+     * @return    void
      */
     protected function populateState($ordering = 'a.created', $direction = 'desc')
     {
         $app = JFactory::getApplication();
 
-        // Adjust the context to support modal layouts.
+        // Adjust the context to support layouts and format.
         $layout = $app->input->get('layout');
+        $format = $app->input->get('format');
 
         if ($layout) $this->context .= '.' . $layout;
+
+        if ($format) {
+            $this->context .= '.' . $format;
+            $this->setState('list.format', $format);
+        }
 
         $this->setState('list.count', false);
 
@@ -445,6 +451,7 @@ class UserActivityModelActivities extends JModelList
     protected function getStoreId($id = '')
     {
         $id .= ':' . $this->getState('list.count');
+        $id .= ':' . $this->getState('list.format');
         $id .= ':' . $this->getState('filter.search');
         $id .= ':' . $this->getState('filter.access');
         $id .= ':' . $this->getState('filter.published');

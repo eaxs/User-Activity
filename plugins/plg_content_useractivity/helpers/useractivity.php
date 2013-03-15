@@ -45,6 +45,13 @@ class plgUserActivityHelper
     protected $cache_title = array();
 
     /**
+     * Cache of title links
+     *
+     * @var    array
+     */
+    protected $cache_title_link = array();
+
+    /**
      * Cache of translated user names
      *
      * @var    array
@@ -65,6 +72,13 @@ class plgUserActivityHelper
      */
     protected $item = null;
 
+    /**
+     * Output format config option
+     *
+     * @var    string
+     */
+    protected $format = null;
+
 
     /**
      * Constructor
@@ -78,6 +92,11 @@ class plgUserActivityHelper
         // Set the user link integration
         if (isset($config['user_link'])) {
             $this->user_link = $config['user_link'];
+        }
+
+        // Set the output format
+        if (isset($config['format'])) {
+            $this->format = $config['format'];
         }
 
         // Override link to joomla when in backend
@@ -116,6 +135,12 @@ class plgUserActivityHelper
             $this->getUserName(),
             $this->getTitle()
         );
+
+        // Get the feed link
+        if ($this->format == 'feed') {
+            $key = $this->item->name . '.' . $this->item->item_id;
+            $item->feed_link = (isset($this->cache_title_link[$key]) ? $this->cache_title_link[$key] : '');
+        }
 
         return $item;
     }
@@ -245,9 +270,13 @@ class plgUserActivityHelper
         $access = (($this->item->asset_exists > 0) ? $this->getTitleAccess() : false);
 
         if ($access) {
-            $this->cache_title[$key] = '<a href="' . $this->getTitleLink() . '">' . htmlspecialchars($this->item->title, ENT_COMPAT, 'UTF-8') . '</a>';
+            $this->cache_title_link[$key] = $this->getTitleLink();
+
+            $this->cache_title[$key] = '<a href="' . $this->cache_title_link[$key] . '">' . htmlspecialchars($this->item->title, ENT_COMPAT, 'UTF-8') . '</a>';
         }
         else {
+            $this->cache_title_link[$key] = null;
+
             $this->cache_title[$key] = htmlspecialchars($this->item->title, ENT_COMPAT, 'UTF-8');
         }
 
