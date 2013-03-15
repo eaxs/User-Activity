@@ -9,9 +9,13 @@
 
 defined('_JEXEC') or die();
 
+
+JHtml::_('behavior.tooltip');
+
 $list_order  = $this->escape($this->state->get('list.ordering'));
 $list_dir    = $this->escape($this->state->get('list.direction'));
 $date_format = $this->params->get('date_format', JText::_('DATE_FORMAT_LC1'));
+$date_rel    = (int) $this->params->get('date_relative', 1);
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_useractivity&view=activities'); ?>" method="post" name="adminForm" id="adminForm" autocomplete="off">
 
@@ -48,12 +52,23 @@ $date_format = $this->params->get('date_format', JText::_('DATE_FORMAT_LC1'));
     <ul>
         <?php
         foreach ($this->items as $i => $item) :
+            $date = JHtml::_('date', $item->created, $date_format);
             ?>
             <li>
                 <span class="row-title"><?php echo $item->text; ?></span>
-                <span class="small">
-                    <?php echo JHtml::_('date', $item->created, $date_format); ?>
-                </span>
+                <p class="small">
+                    <?php
+                        if ($date_rel) :
+                            ?>
+                            <span class="hasTip" title="<?php echo $date; ?>" style="cursor: help;">
+                                <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
+                            </span>
+                            <?php
+                        else :
+                            echo $date;
+                        endif;
+                    ?>
+                </p>
             </li>
             <?php
         endforeach;
@@ -63,7 +78,6 @@ $date_format = $this->params->get('date_format', JText::_('DATE_FORMAT_LC1'));
 
     <?php echo $this->pagination->getListFooter(); ?>
 
-    <input type="hidden" name="boxchecked" value="0" />
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="filter_order" value="<?php echo $list_order; ?>" />
     <input type="hidden" name="filter_order_Dir" value="<?php echo $list_dir; ?>" />

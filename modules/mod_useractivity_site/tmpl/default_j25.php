@@ -23,6 +23,8 @@ $limit = (int) $params->get('list_limit');
 $count = count($data['items']);
 $start = 0;
 
+$com_params  = JComponentHelper::getParams('com_useractivity');
+$date_rel    = $params->get('date_relative', $com_params->get('date_relative', 1));
 $date_format = $params->get('date_format');
 if (!$date_format) $date_format = JText::_('DATE_FORMAT_LC1');
 
@@ -130,11 +132,22 @@ function uaFilterSearch<?php echo $id;?>(v)
     	<?php if ($count) : ?>
                 <?php
                 foreach ($data['items'] as $i => $item) :
+                    $date = JHtml::_('date', $item->created, $date_format);
                     ?>
                     <li>
                         <strong class="row-title"><?php echo $item->text; ?></strong>
                         <p class="small">
-                            <?php echo JHtml::_('date', $item->created, $date_format); ?>
+                            <?php
+                            if ($date_rel) :
+                                ?>
+                                <span class="hasTip" title="<?php echo $date; ?>" style="cursor: help;">
+                                    <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
+                                </span>
+                                <?php
+                            else :
+                                echo $date;
+                            endif;
+                            ?>
                         </p>
                     </li>
                     <?php

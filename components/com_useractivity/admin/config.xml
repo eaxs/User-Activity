@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
     <fieldset name="shared" label="COM_USERACTIVITY_CONFIG_SHARED_SETTINGS_LABEL" description="COM_USERACTIVITY_CONFIG_SHARED_SETTINGS_DESC">
-        <field name="group_activity" type="list" default="5"
+        <field name="group_activity" type="list" default="0"
             label="COM_USERACTIVITY_CONFIG_GROUP_ACTIVITY_LABEL" description="COM_USERACTIVITY_CONFIG_GROUP_ACTIVITY_DESC"
             >
                 <option value="0">COM_USERACTIVITY_FIELD_OPTION_PERIOD_0</option>
@@ -11,6 +11,11 @@
                 <option value="30">COM_USERACTIVITY_FIELD_OPTION_PERIOD_30</option>
                 <option value="60">COM_USERACTIVITY_FIELD_OPTION_PERIOD_60</option>
         </field>
+        <field name="date_relative" type="radio" class="btn-group" default="1"
+			label="COM_USERACTIVITY_CONFIG_DATE_RELATIVE_LABEL" description="COM_USERACTIVITY_CONFIG_DATE_RELATIVE_DESC">
+			<option value="0">JNO</option>
+            <option value="1">JYES</option>
+		</field>
         <field
             name="date_format" type="text" size="15"
             label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"

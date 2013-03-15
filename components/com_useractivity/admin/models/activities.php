@@ -26,14 +26,14 @@ class UserActivityModelActivities extends JModelList
     /**
      * Config option of whether to group activity or not
      *
-     * @var    integer
+     * @var    integer    
      */
     protected $group_activity;
 
     /**
      * Config option for the user profile link destination
      *
-     * @var    string
+     * @var    string    
      */
     protected $user_link;
 
@@ -76,6 +76,12 @@ class UserActivityModelActivities extends JModelList
      */
     public function getItems()
     {
+        // Populate state if not done yet
+        if (!$this->__state_set) {
+            $this->populateState();
+            $this->__state_set = true;
+        }
+
         // Get grouped?
         if ($this->group_activity > 0) {
             return $this->getItemsGrouped();
@@ -362,7 +368,7 @@ class UserActivityModelActivities extends JModelList
      * @param     string    $ordering     An optional ordering field.
      * @param     string    $direction    An optional direction (asc|desc).
      *
-     * @return    void
+     * @return    void                    
      */
     protected function populateState($ordering = 'a.created', $direction = 'desc')
     {
@@ -375,9 +381,19 @@ class UserActivityModelActivities extends JModelList
 
         $this->setState('list.count', false);
 
-        // Params
+        // Frontent Menu item params
         if ($app->isSite()) {
-            $this->setState('params', $app->getParams());
+            $params = $app->getParams();
+            $this->setState('params', $params);
+
+            // Override settings from menu item
+            if (is_numeric($params->get('group_activity'))) {
+                $this->group_activity = (int) $params->get('group_activity');
+            }
+
+            if ($params->get('user_link') != '') {
+                $this->user_link = $params->get('user_link');
+            }
         }
 
         // Filter- Search
@@ -433,10 +449,12 @@ class UserActivityModelActivities extends JModelList
         $id .= ':' . $this->getState('filter.access');
         $id .= ':' . $this->getState('filter.published');
         $id .= ':' . $this->getState('filter.author_id');
-        $id .= ':' . serialize($this->getState('filter.extension_id'));
+        $id .= ':' . serialize($this->getState('filter.extension'));
         $id .= ':' . $this->getState('filter.event_id');
         $id .= ':' . $this->getState('filter.client_id');
         $id .= ':' . $this->getState('filter.xref_id');
+        $id .= ':' . $this->group_activity;
+        $id .= ':' . $this->user_link;
 
         return parent::getStoreId($id);
     }

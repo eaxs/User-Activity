@@ -27,10 +27,6 @@
                     label="MOD_USERACTIVITY_ADMIN_FIELD_LIST_LIMIT_LABEL" description="MOD_USERACTIVITY_ADMIN_FIELD_LIST_LIMIT_DESC"
                 />
                 <field
-                    name="date_format" type="text" size="15"
-                    label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"
-                />
-                <field
                     name="group_activity" type="list" default=""
                     label="MOD_USERACTIVITY_ADMIN_CONFIG_GROUP_ACTIVITY_LABEL" description="MOD_USERACTIVITY_ADMIN_CONFIG_GROUP_ACTIVITY_DESC"
                     >
@@ -42,6 +38,16 @@
                         <option value="30">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_30</option>
                         <option value="60">MOD_USERACTIVITY_ADMIN_FIELD_OPTION_PERIOD_60</option>
                 </field>
+                <field name="date_relative" type="list"
+        			label="MOD_USERACTIVITY_ADMIN_CONFIG_DATE_RELATIVE_LABEL" description="MOD_USERACTIVITY_ADMIN_CONFIG_DATE_RELATIVE_DESC">
+        			<option value="">JGLOBAL_USE_GLOBAL</option>
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+        		</field>
+                <field
+                    name="date_format" type="text" size="15"
+                    label="JGLOBAL_DATE_FORMAT_LABEL" description="JGLOBAL_DATE_FORMAT_DESC"
+                />
                 <field name="filter_author_id" type="list" default="0"
                     label="MOD_USERACTIVITY_ADMIN_FIELD_AUTHORS_LABEL" description="MOD_USERACTIVITY_ADMIN_FIELD_AUTHORS_DESC">
                     <option value="0">MOD_USERACTIVITY_ADMIN_FIELD_VALUE_ANYONE</option>

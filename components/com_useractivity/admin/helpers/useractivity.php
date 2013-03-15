@@ -162,4 +162,38 @@ class UserActivityHelper
 
         return true;
     }
+
+
+    /**
+     * Method to transform an activity date into a relative format
+     *
+     * @param     string    $datetime    Activity date time
+     *
+     * @return    string                 The formatted date
+     */
+    public static function relativeDateTime($datetime)
+    {
+        $minutes = floor((time() - strtotime($datetime)) / 60);
+        $hours   = floor($minutes / 60);
+        $days    = floor($hours / 24);
+        $months  = floor($days / 30);
+
+        if ($months) {
+            return JText::sprintf('COM_USERACTIVITY_DT_MONTH' . ($months > 1 ? 'S' : '') . '_AGO', $months);
+        }
+
+        if ($days) {
+            return JText::sprintf('COM_USERACTIVITY_DT_DAY' . ($days > 1 ? 'S' : '') . '_AGO', $days);
+        }
+
+        if ($hours) {
+            return JText::sprintf('COM_USERACTIVITY_DT_HOUR' . ($hours > 1 ? 'S' : '') . '_AGO', $hours);
+        }
+
+        if ($minutes) {
+            return JText::sprintf('COM_USERACTIVITY_DT_MIN' . ($minutes > 1 ? 'S' : '') . '_AGO', $minutes);
+        }
+
+        return JText::_('COM_USERACTIVITY_DT_JUST_NOW');
+    }
 }

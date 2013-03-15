@@ -22,6 +22,7 @@ $list_dir   = $this->escape($this->state->get('list.direction'));
 $can_change = $this->user->authorise('core.edit.state', 'com_useractivity');
 
 $date_format = $this->params->get('date_format', JText::_('DATE_FORMAT_LC1'));
+$date_rel    = (int) $this->params->get('date_relative', 1);
 $count = sizeOf($this->items);
 ?>
 <?php if (!$this->is_j25) : ?>
@@ -84,6 +85,7 @@ $count = sizeOf($this->items);
         <tbody>
             <?php
                 foreach ($this->items as $i => $item) :
+                    $date = JHtml::_('date', $item->created, $date_format);
                     ?>
                     <tr class="row<?php echo $i % 2; ?>">
                         <td class="hidden-phone">
@@ -96,7 +98,21 @@ $count = sizeOf($this->items);
                             <?php echo $item->text; ?>
                         </td>
                         <td class="nowrap">
-                            <?php echo JHtml::_('date', $item->created, $date_format); ?>
+                            <?php
+                                if ($date_rel) :
+                                    ?>
+                                    <span class="label hasTip" title="<?php echo $date; ?>" style="cursor: help;">
+                                        <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
+                                    </span>
+                                    <?php
+                                else :
+                                    ?>
+                                    <span class="label">
+                                        <?php echo $date; ?>
+                                    </span>
+                                    <?php
+                                endif;
+                            ?>
                         </td>
                         <td class="hidden-phone small">
                             <?php echo $item->client; ?>

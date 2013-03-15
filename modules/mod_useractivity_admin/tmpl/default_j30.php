@@ -19,6 +19,8 @@ $limit = (int) $params->get('list_limit');
 $count = count($data['items']);
 $start = 0;
 
+$com_params  = JComponentHelper::getParams('com_useractivity');
+$date_rel    = $params->get('date_relative', $com_params->get('date_relative', 1));
 $date_format = $params->get('date_format');
 if (!$date_format) $date_format = JText::_('DATE_FORMAT_LC1');
 
@@ -147,16 +149,30 @@ function uaFilterSearch<?php echo $id;?>(v)
     		<div id="activities-<?php echo $id; ?>">
                 <?php
                 foreach ($data['items'] as $i => $item) :
+                    $date = JHtml::_('date', $item->created, $date_format);
                     ?>
                     <div class="row-fluid">
                         <div class="span9">
                             <strong class="row-title"><?php echo $item->text; ?></strong>
                         </div>
                         <div class="span3">
-                            <span class="small">
-                                <i class="icon-calendar"></i>
-                                <?php echo JHtml::_('date', $item->created, $date_format); ?>
-                            </span>
+                            <?php
+                                if ($date_rel) :
+                                    ?>
+                                    <span class="small hasTooltip" title="<?php echo $date; ?>" style="cursor: help;">
+                                        <i class="icon-calendar"></i>
+                                        <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
+                                    </span>
+                                    <?php
+                                else :
+                                    ?>
+                                    <span class="small">
+                                        <i class="icon-calendar"></i>
+                                        <?php echo $date; ?>
+                                    </span>
+                                    <?php
+                                endif;
+                            ?>
                         </div>
                     </div>
                     <?php
