@@ -309,12 +309,29 @@ class plgUserActivityHelper
     {
         $asset = $this->item->extension . '.' . $this->item->name . '.' . $this->item->item_id;
 
-        if ($this->item->item_state != '1' && $this->client_id == 0) {
-            if (!$this->user->authorise('core.edit.state', $asset)) {
+        // Perform additional checks in the frontend
+        if ($this->client_id == 0) {
+            // Check item state access
+            if ($this->item->item_state != '1') {
+                if (!$this->user->authorise('core.edit.state', $asset)) {
+                    return false;
+                }
+            }
+
+            // Check item access
+            if (!$user->authorise('core.admin', $this->item->extension)) {
+                if (!in_array($this->item->item_access, $user->getAuthorisedViewLevels())) {
+                    return false;
+                }
+            }
+        }
+        else {
+            // Admin area - Check edit permission
+            if (!$this->user->authorise('core.edit', $asset)) {
                 return false;
             }
         }
 
-        return ($this->client_id ? $this->user->authorise('core.edit', $asset) : true);
+        return true;
     }
 }
