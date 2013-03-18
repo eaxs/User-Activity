@@ -1,6 +1,6 @@
 <?php
 /**
- * @package      User Activity
+ * @package      pkg_useractivity
  * @subpackage   mod_useractivity_site
  *
  * @author       Tobias Kuhn (eaxs)
@@ -187,7 +187,7 @@ function uaFilterSearch<?php echo $id;?>(v)
     	<?php else : ?>
     		<div class="row-fluid">
     			<div class="span12">
-    				<div class="alert"><?php echo JText::_('MOD_POPULAR_NO_MATCHING_RESULTS');?></div>
+    				<div class="alert"><?php echo JText::_('MOD_USERACTIVITY_SITE_NO_MATCHING_RESULTS');?></div>
     			</div>
     		</div>
     	<?php endif; ?>

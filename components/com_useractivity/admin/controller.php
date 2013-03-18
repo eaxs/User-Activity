@@ -1,6 +1,7 @@
 <?php
 /**
- * @package      User Activity
+ * @package      pkg_useractivity
+ * @subpackage   com_useractivity
  *
  * @author       Tobias Kuhn (eaxs)
  * @copyright    Copyright (C) 2013 Tobias Kuhn. All rights reserved.
