@@ -319,8 +319,8 @@ class plgUserActivityHelper
             }
 
             // Check item access
-            if (!$user->authorise('core.admin', $this->item->extension)) {
-                if (!in_array($this->item->item_access, $user->getAuthorisedViewLevels())) {
+            if (!$this->user->authorise('core.admin', $this->item->extension)) {
+                if (!in_array($this->item->item_access, $this->user->getAuthorisedViewLevels())) {
                     return false;
                 }
             }
