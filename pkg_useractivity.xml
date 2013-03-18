@@ -25,4 +25,7 @@
         <file type="module" id="mod_useractivity_admin" client="administrator" method="upgrade">modules/mod_useractivity_admin</file>
         <file type="module" id="mod_useractivity_site" client="site" method="upgrade">modules/mod_useractivity_site</file>
     </files>
+    <updateservers>
+        <server type="extension" priority="1" name="User Activity Update"><![CDATA[http://projectfork.net/index.php?option=com_ars&view=update&task=stream&format=xml&id=5&dummy=extension.xml]]></server>
+    </updateservers>
 </extension>
