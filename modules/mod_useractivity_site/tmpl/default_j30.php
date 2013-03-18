@@ -123,6 +123,7 @@ function uaFilterSearch<?php echo $id;?>(v)
                     <div class="btn-toolbar">
                         <?php
                             if ($params->get('show_filter_extension')) :
+                                $ext = $params->get('filter_extension');
                                 if ($ext_empty) :
                                 ?>
                                 <div class="btn-group">
