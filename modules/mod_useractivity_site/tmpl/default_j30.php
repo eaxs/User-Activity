@@ -1,6 +1,6 @@
 <?php
 /**
- * @package      User Activity
+ * @package      pkg_useractivity
  * @subpackage   mod_useractivity_site
  *
  * @author       Tobias Kuhn (eaxs)
@@ -109,7 +109,7 @@ function uaFilterSearch<?php echo $id;?>(v)
     >
 
     <?php if ($count) : ?>
-    	<div class="btn-toolbar">
+        <div class="btn-toolbar">
 
             <!-- Start Search -->
             <?php if ($params->get('show_filter_extension') || $params->get('show_filter_event')) : ?>
@@ -130,7 +130,7 @@ function uaFilterSearch<?php echo $id;?>(v)
             <!-- End Search -->
 
             <div class="clearfix"></div>
-    	</div>
+        </div>
 
         <div class="clearfix"></div>
 
@@ -140,6 +140,7 @@ function uaFilterSearch<?php echo $id;?>(v)
                 <div class="btn-toolbar">
                     <?php
                         if ($params->get('show_filter_extension')) :
+                            $ext = $params->get('filter_extension');
                             if ($ext_empty) :
                             ?>
                             <div class="btn-group">
@@ -165,50 +166,51 @@ function uaFilterSearch<?php echo $id;?>(v)
         <?php endif; ?>
         <!-- End Filters -->
     <?php endif; ?>
+
     <!-- Start List -->
-    	<?php if ($count) : ?>
-    		<div id="activities-<?php echo $id; ?>" class="row-striped">
+        <?php if ($count) : ?>
+            <div id="activities-<?php echo $id; ?>" class="row-striped">
                 <?php
                 foreach ($data['items'] as $i => $item) :
                     $date = JHtml::_('date', $item->created, $date_format);
                     ?>
                         <div class="row-fluid">
                             <div class="span12">
-	                            <span class="small muted pull-right">
-	                                <?php
-	                                    if ($date_rel) :
-	                                        ?>
-	                                        <span class="hasTooltip" title="<?php echo $date; ?>" style="cursor: help;">
-	                                            <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
-	                                        </span>
-	                                        <?php
-	                                    else :
-	                                        ?>
-	                                        <?php echo $date; ?>
-	                                        <?php
-	                                    endif;
-	                                ?>
-	                            </span>
+                                <span class="small muted pull-right">
+                                    <?php
+                                        if ($date_rel) :
+                                            ?>
+                                            <span class="hasTooltip" title="<?php echo $date; ?>" style="cursor: help;">
+                                                <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
+                                            </span>
+                                            <?php
+                                        else :
+                                            ?>
+                                            <?php echo $date; ?>
+                                            <?php
+                                        endif;
+                                    ?>
+                                </span>
                                 <span class="label label-<?php echo $item->name; ?>"><?php echo $item->name; ?></span>
-	                            <strong class="row-title"><?php echo $item->text; ?></strong>
+                                <strong class="row-title"><?php echo $item->text; ?></strong>
                             </div>
                         </div>
                     <?php
                 endforeach;
                 ?>
             </div>
-    	<?php else : ?>
-    		<div class="row-fluid">
-    			<div class="span12">
-    				<div class="alert"><?php echo JText::_('MOD_POPULAR_NO_MATCHING_RESULTS');?></div>
-    			</div>
-    		</div>
-    	<?php endif; ?>
+        <?php else : ?>
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="alert"><?php echo JText::_('MOD_USERACTIVITY_SITE_NO_MATCHING_RESULTS');?></div>
+                </div>
+            </div>
+        <?php endif; ?>
     <!-- End List -->
 
     <!-- Start Bottom Navigation -->
     <?php if ($count) : ?>
-    	<div class="btn-toolbar">
+        <div class="btn-toolbar">
             <div class="btn-group">
                 <a class="actbtn-prev-<?php echo $id; ?> btn btn-mini disabled"
                     style="cursor: pointer;" onclick="uaPrev<?php echo $id; ?>(this);"
@@ -221,7 +223,7 @@ function uaFilterSearch<?php echo $id;?>(v)
                     <span aria-hidden="true" class="icon-arrow-down"></span>
                 </a>
             </div>
-    	</div>
+        </div>
         <div class="clearfix"></div>
     <?php endif; ?>
     <!-- End Bottom Navigation -->
