@@ -22,28 +22,27 @@ foreach ($data['items'] AS $item)
 {
     $date = JHtml::_('date', $item->created, $date_format);
 
-    $html = '<div class="row-fluid" style="display:none;">'
-          . '    <div class="span9">'
-          . '        <strong class="row-title">'
-          .              $item->text
-          . '        </strong>'
-          . '    </div>'
-          . '    <div class="span3">';
+    $html = '<div class="row-fluid">';
+    $html .= '  <div class="span12">';
 
-    if ($date_rel) {
-        $html .= '<span class="small hasTooltip" title="' . $date . '" style="cursor: help;">'
-               . '    <i class="icon-calendar"></i>'
-               .      UserActivityHelper::relativeDateTime($item->created)
-               . '</span>';
-    }
-    else {
-        $html .= '<span class="small">'
-               . '    <i class="icon-calendar"></i>'
-               .     $date
-               . '</span>';
-    }
-    $html .= '    </div>'
-          . '</div>';
+    $html .= '    <span class="small muted pull-right">';
+
+    if ($date_rel) :
+        $html .= '<span class="hasTooltip" title="' . $date . '" style="cursor: help;">'
+              .  UserActivityHelper::relativeDateTime($item->created)
+              . ' </span>';
+    else :
+        $html .= $date;
+    endif;
+
+    $html .= '    </span>';
+
+    $html .= '    <span class="label label-' . $item->name . '">' . $item->name . '</span> ';
+
+    $html .= '    <strong class="row-title">' . $item->text . '</strong>';
+
+    $html .= '  </div>';
+    $html .= '</div>';
 
     $items[] = $html;
 }

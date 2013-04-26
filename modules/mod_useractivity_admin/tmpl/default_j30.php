@@ -36,6 +36,41 @@ if (!$ext_empty && is_array($filter_ext)) {
     }
     $ext_empty = $empty;
 }
+$doc =& JFactory::getDocument();
+$style = '.label-project {'
+        . 'background-color: #80699B;'
+        . '}'
+        . '.label-milestone {'
+        . 'background-color: #4572A7;'
+        . '}'
+        . '.label-tasklist {'
+        . 'background-color: #8bbc21;'
+        . '}'
+        . '.label-task {'
+        . 'background-color: #910000;'
+        . '}'
+        . '.label-time {'
+        . 'background-color: #1aadce;'
+        . '}'
+        . '.label-topic {'
+        . 'background-color: #492970;'
+        . '}'
+        . '.label-reply {'
+        . 'background-color: #fc7136;'
+        . '}'
+        . '.label-design {'
+        . 'background-color: #f28f43;'
+        . '}'
+        . '.label-category {'
+        . 'background-color: #DB843D;'
+        . '}'
+        . '.label-article {'
+        . 'background-color: #95b262;'
+        . '}'
+        . '.row-striped .img-circle {'
+        . 'margin: 0 10px 0 0;'
+        . '}';
+$doc->addStyleDeclaration( $style );
 ?>
 <script type="text/javascript">
 var fpv = '';
@@ -74,35 +109,18 @@ function uaFilterSearch<?php echo $id;?>(v)
 
     <?php if ($count) : ?>
     	<div class="btn-toolbar">
-            <!-- Start Top Navigation -->
-            <div class="btn-group">
-                <a class="actbtn-prev-<?php echo $id; ?> btn btn-mini disabled"
-                    style="cursor: pointer;" onclick="uaPrev<?php echo $id; ?>(this);"
-                >
-                    <i class="icon-arrow-up"></i>
-                </a>
-                <a class="actbtn-next-<?php echo $id; ?> btn btn-mini<?php if ($limit >=  $data['total']) echo ' disabled'; ?>"
-                    style="cursor: pointer; " onclick="uaNext<?php echo $id; ?>(this);"
-                >
-                    <i class="icon-arrow-down"></i>
-                </a>
-            </div>
-            <!-- End Top Navigation -->
 
             <!-- Start Search -->
             <div class="btn-group pull-right">
                 <a class="btn" data-toggle="collapse" data-target="#act-filters-<?php echo $id; ?>" href="#">
-                    <i class="icon-cog"></i>
+                    <i class="icon-filter"></i>
                 </a>
             </div>
-            <div class="btn-group pull-right">
-                <div class="input-prepend">
-                    <span class="add-on"><i class="icon-search"></i></span>
-                    <input type="text" class="input-large" placeholder="<?php echo JText::_('MOD_USERACTIVITY_ADMIN_FILTER_SEARCH_DESC'); ?>"
-                        name="filter_search" value="" autocomplete="off" onkeyup="uaFilterSearch<?php echo $id;?>(this.value);"
-                        title="<?php echo JText::_('MOD_USERACTIVITY_ADMIN_FILTER_SEARCH_DESC'); ?>"
-                    />
-                </div>
+            <div class="btn-group pull-left">
+                <input type="text" class="search-query" placeholder="<?php echo JText::_('MOD_USERACTIVITY_ADMIN_FILTER_SEARCH_DESC'); ?>"
+                    name="filter_search" value="" autocomplete="off" onkeyup="uaFilterSearch<?php echo $id;?>(this.value);"
+                    title="<?php echo JText::_('MOD_USERACTIVITY_ADMIN_FILTER_SEARCH_DESC'); ?>"
+                />
             </div>
             <!-- End Search -->
 
@@ -113,66 +131,61 @@ function uaFilterSearch<?php echo $id;?>(v)
 
         <!-- Start Filters -->
         <div class="collapse" id="act-filters-<?php echo $id; ?>">
-            <div class="well well-small">
-                <div class="btn-toolbar">
-                    <div class="btn-group">
-                        <select name="filter_client_id" onchange="uaFilter<?php echo $id;?>()" class="input-medium">
-                            <?php echo JHtml::_('select.options', $model->getLocations(), 'value', 'text', (int) $params->get('filter_client_id')); ?>
-                        </select>
-                    </div>
-                    <?php
-                        $ext = $params->get('filter_extension');
-                        if ($ext_empty) : ?>
-                        <div class="btn-group">
-                            <select name="filter_extension" onchange="uaFilter<?php echo $id;?>()" class="input-medium">
-                                <option value=""><?php echo JText::_('MOD_USERACTIVITY_ADMIN_FIELD_OPTION_SELECT_EXTENSION'); ?></option>
-                                <?php echo JHtml::_('select.options', $model->getExtensions(), 'value', 'text', $ext); ?>
-                            </select>
-                        </div>
-                    <?php endif; ?>
-                    <div class="btn-group">
-                        <select name="filter_event_id" onchange="uaFilter<?php echo $id;?>()" class="input-medium">
-                            <option value=""><?php echo JText::_('MOD_USERACTIVITY_ADMIN_FIELD_OPTION_SELECT_EVENT'); ?></option>
-                            <?php echo JHtml::_('select.options', $model->getEvents(), 'value', 'text', $params->get('filter_event_id')); ?>
-                        </select>
-                    </div>
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <select name="filter_client_id" onchange="uaFilter<?php echo $id;?>()" class="input-medium">
+                        <?php echo JHtml::_('select.options', $model->getLocations(), 'value', 'text', (int) $params->get('filter_client_id')); ?>
+                    </select>
                 </div>
-                <div class="clearfix"></div>
+                <?php
+                    $ext = $params->get('filter_extension');
+                    if ($ext_empty) : ?>
+                    <div class="btn-group">
+                        <select name="filter_extension" onchange="uaFilter<?php echo $id;?>()" class="input-medium">
+                            <option value=""><?php echo JText::_('MOD_USERACTIVITY_ADMIN_FIELD_OPTION_SELECT_EXTENSION'); ?></option>
+                            <?php echo JHtml::_('select.options', $model->getExtensions(), 'value', 'text', $ext); ?>
+                        </select>
+                    </div>
+                <?php endif; ?>
+                <div class="btn-group">
+                    <select name="filter_event_id" onchange="uaFilter<?php echo $id;?>()" class="input-medium">
+                        <option value=""><?php echo JText::_('MOD_USERACTIVITY_ADMIN_FIELD_OPTION_SELECT_EVENT'); ?></option>
+                        <?php echo JHtml::_('select.options', $model->getEvents(), 'value', 'text', $params->get('filter_event_id')); ?>
+                    </select>
+                </div>
             </div>
+            <div class="clearfix"></div>
         </div>
         <!-- End Filters -->
     <?php endif; ?>
 
     <!-- Start List -->
-    <div class="row-striped">
     	<?php if ($count) : ?>
-    		<div id="activities-<?php echo $id; ?>">
+    		<div id="activities-<?php echo $id; ?>" class="row-striped">
                 <?php
                 foreach ($data['items'] as $i => $item) :
                     $date = JHtml::_('date', $item->created, $date_format);
                     ?>
                     <div class="row-fluid">
-                        <div class="span9">
-                            <strong class="row-title"><?php echo $item->text; ?></strong>
-                        </div>
-                        <div class="span3">
-                            <?php
-                                if ($date_rel) :
-                                    ?>
-                                    <span class="small hasTooltip" title="<?php echo $date; ?>" style="cursor: help;">
-                                        <i class="icon-calendar"></i>
-                                        <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
-                                    </span>
-                                    <?php
-                                else :
-                                    ?>
-                                    <span class="small">
-                                        <i class="icon-calendar"></i>
+                        <div class="span12">
+
+                            <span class="small muted pull-right">
+                                <?php
+                                    if ($date_rel) :
+                                        ?>
+                                        <span class="hasTooltip" title="<?php echo $date; ?>" style="cursor: help;">
+                                            <?php echo UserActivityHelper::relativeDateTime($item->created); ?>
+                                        </span>
+                                        <?php
+                                    else :
+                                        ?>
                                         <?php echo $date; ?>
-                                    </span>
-                                    <?php
-                                endif;
-                            ?>
+                                        <?php
+                                    endif;
+                                ?>
+                            </span>
+                            <span class="label label-<?php echo $item->name; ?>"><?php echo $item->name; ?></span>
+                            <strong class="row-title"><?php echo $item->text; ?></strong>
                         </div>
                     </div>
                     <?php
@@ -186,7 +199,6 @@ function uaFilterSearch<?php echo $id;?>(v)
     			</div>
     		</div>
     	<?php endif; ?>
-    </div>
     <!-- End List -->
 
     <!-- Start Bottom Navigation -->

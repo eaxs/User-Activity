@@ -23,24 +23,27 @@ foreach ($data['items'] AS $item)
 {
     $date = JHtml::_('date', $item->created, $date_format);
 
-    $html = '<div class="row-fluid" style="display:none;">'
-          . '<div class="span12">'
-          . '<strong class="row-title">' . $item->text . '</strong>'
-          . '<p class="small">';
+    $html = '<div class="row-fluid">';
+    $html .= '  <div class="span12">';
+
+    $html .= '    <span class="small muted pull-right">';
 
     if ($date_rel) :
         $html .= '<span class="hasTooltip" title="' . $date . '" style="cursor: help;">'
-              .  '<i class="icon-calendar"></i>'
               .  UserActivityHelper::relativeDateTime($item->created)
-              . '</span>';
+              . ' </span>';
     else :
-        $html .= '<i class="icon-calendar"></i>'
-              .  $date;
+        $html .= $date;
     endif;
 
-    $html .= '</p>'
-          . '</div>'
-          . '</div>';
+    $html .= '    </span>';
+
+    $html .= '    <span class="label label-' . $item->name . '">' . $item->name . '</span> ';
+
+    $html .= '    <strong class="row-title">' . $item->text . '</strong>';
+
+    $html .= '  </div>';
+    $html .= '</div>';
 
     $items[] = $html;
 }
