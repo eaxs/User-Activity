@@ -1,6 +1,6 @@
 <?php
 /**
- * @package      User Activity
+ * @package      pkg_useractivity
  * @subpackage   plg_useractivity_content
  *
  * @author       Tobias Kuhn (eaxs)

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package      User Activity
+ * @package      pkg_useractivity
  * @subpackage   mod_useractivity_site
  *
  * @author       Tobias Kuhn (eaxs)
