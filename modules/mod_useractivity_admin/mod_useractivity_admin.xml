@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5" client="administrator">
+<extension type="module" version="2.5" client="administrator" method="upgrade">
     <name>mod_useractivity_admin</name>
     <author>Tobias Kuhn</author>
-    <creationDate>March 2013</creationDate>
+    <creationDate>May 2013</creationDate>
     <copyright>Copyright (C) 2013 Tobias Kuhn. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>support@projectfork.net</authorEmail>
     <authorUrl>www.projectfork.net</authorUrl>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <description>MOD_USERACTIVITY_ADMIN_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_useractivity_admin">mod_useractivity_admin.php</filename>
