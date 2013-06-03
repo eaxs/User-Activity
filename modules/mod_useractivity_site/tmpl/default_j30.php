@@ -37,7 +37,7 @@ if (!$ext_empty && is_array($filter_ext)) {
     }
     $ext_empty = $empty;
 }
-$doc =& JFactory::getDocument();
+
 $style = '.label-project {'
         . 'background-color: #80699B;'
         . '}'
@@ -71,7 +71,8 @@ $style = '.label-project {'
         . '.row-striped .img-circle {'
         . 'margin: 0 10px 0 0;'
         . '}';
-$doc->addStyleDeclaration( $style );
+
+JFactory::getDocument()->addStyleDeclaration( $style );
 ?>
 <script type="text/javascript">
 var fpv = '';
