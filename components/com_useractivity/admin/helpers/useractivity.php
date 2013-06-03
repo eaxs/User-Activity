@@ -169,12 +169,49 @@ class UserActivityHelper
      * Method to transform an activity date into a relative format
      *
      * @param     string    $datetime    Activity date time
+     * @param     boolean    $tz         If true, adjust for local user time
      *
      * @return    string                 The formatted date
      */
-    public static function relativeDateTime($datetime)
+    public static function relativeDateTime($datetime, $tz = true)
     {
-        $minutes = floor((time() - strtotime($datetime)) / 60);
+        static $time_offset = null;
+        static $time_format = null;
+        static $time_now    = null;
+
+        if (is_null($time_offset)) {
+            $config = JFactory::getConfig();
+		    $user   = JFactory::getUser();
+
+            $time_offset = $user->getParam('timezone', $config->get('offset'));
+            $time_format = 'l, d F Y H:i';
+
+            if ($tz) {
+                $now_date = JFactory::getDate('now', 'UTC');
+
+                $now_date->setTimeZone(new DateTimeZone($time_offset));
+
+                $time_now = strtotime($now_date->calendar($time_format, true, false));
+            }
+            else {
+                $time_now = time();
+            }
+        }
+
+        if ($tz) {
+            // Get a date object based on UTC.
+			$time_date = JFactory::getDate($datetime, 'UTC');
+
+			// Set the correct time zone based on the user configuration.
+			$time_date->setTimeZone(new DateTimeZone($time_offset));
+
+            $datetime = strtotime($time_date->calendar($time_format, true, false));
+        }
+        else {
+            $datetime = strtotime($datetime);
+        }
+
+        $minutes = floor(($time_now - $datetime) / 60);
         $hours   = floor($minutes / 60);
         $days    = floor($hours / 24);
         $months  = floor($days / 30);
