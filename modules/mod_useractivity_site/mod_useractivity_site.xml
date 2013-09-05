@@ -2,12 +2,12 @@
 <extension type="module" version="2.5" client="site" method="upgrade">
     <name>mod_useractivity_site</name>
     <author>Tobias Kuhn</author>
-    <creationDate>June 2013</creationDate>
+    <creationDate>September 2013</creationDate>
     <copyright>Copyright (C) 2013 Tobias Kuhn. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>support@projectfork.net</authorEmail>
     <authorUrl>www.projectfork.net</authorUrl>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <description>MOD_USERACTIVITY_SITE_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_useractivity_site">mod_useractivity_site.php</filename>

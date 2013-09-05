@@ -2,19 +2,25 @@
 <extension type="component" version="2.5" method="upgrade">
     <name>com_useractivity</name>
     <author>Tobias Kuhn</author>
-    <creationDate>June 2013</creationDate>
+    <creationDate>September 2013</creationDate>
     <copyright>(C) 2013 Tobias Kuhn. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>support@projectfork.net</authorEmail>
     <authorUrl>www.projectfork.net</authorUrl>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <description>COM_USERACTIVITY_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
     <install folder="admin">
         <sql>
             <file driver="mysql" charset="utf8">_install/mysql/structure.sql</file>
             <file driver="mysql" charset="utf8">_install/mysql/data.sql</file>
         </sql>
     </install>
+    <update folder="admin">
+		<schemas>
+			<schemapath type="mysql">_update/mysql</schemapath>
+		</schemas>
+	</update>
     <uninstall folder="admin">
         <sql>
             <file driver="mysql" charset="utf8">_uninstall/mysql/data.sql</file>
@@ -37,6 +43,7 @@
     <administration>
         <files folder="admin">
             <folder>_install</folder>
+            <folder>_update</folder>
             <folder>_uninstall</folder>
             <folder>controllers</folder>
             <folder>helpers</folder>

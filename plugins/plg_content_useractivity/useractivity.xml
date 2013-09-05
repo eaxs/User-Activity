@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="content" method="upgrade">
     <name>plg_content_useractivity</name>
-    <creationDate>June 2013</creationDate>
+    <creationDate>September 2013</creationDate>
     <author>Tobias Kuhn</author>
     <copyright>(C) 2013 Tobias Kuhn. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later</license>
     <authorEmail>support@projectfork.net</authorEmail>
     <authorUrl>www.projectfork.net</authorUrl>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <description>PLG_CONTENT_USERACTIVITY_XML_DESCRIPTION</description>
     <files>
         <filename plugin="useractivity">useractivity.php</filename>
