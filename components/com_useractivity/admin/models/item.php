@@ -136,7 +136,7 @@ class UserActivityModelItem extends JModelAdmin
         $query = $this->_db->getQuery(true);
 
         // Load the item by asset id
-        $query->select('type_id, xref_id, title, state, access, metadata')
+        $query->select('type_id, xref_id, title, state, vaccess, metadata')
               ->from('#__user_activity_items')
               ->where('asset_id = ' . (int) $data['asset_id']);
 
@@ -167,31 +167,47 @@ class UserActivityModelItem extends JModelAdmin
                 $update = true;
             }
 
-            // Check for changed access
-            if (isset($data['access']) && $row['access'] != $data['access']) {
-                $obj->access = $data['access'];
-                $update = true;
-            }
+            /**
+             * Table field "access" has been renamed to "vaccess"
+             *
+             * @since 1.2
+             */
+             if (!isset($data['vaccess'])) {
+                if (isset($data['access'])) {
+                    $data['vaccess'] = $data['access'];
 
-            // Check for changed meta data
-            $meta = (string) $data['metadata'];
-            if ($meta != $row['metadata']) {
-                $obj->metadata = $meta;
-                $update = true;
-            }
-
-            if ($update) {
-                // Update existing item
-                if (!$this->_db->updateObject('#__user_activity_items', $obj, 'asset_id', false)) {
-                    return false;
+                    unset($data['access']);
                 }
-            }
+                else {
+                    $data['vaccess'] = JFactory::getConfig()->get('access');
+                }
+             }
 
-            $this->setState($this->getName() . '.id',   (int) $data['asset_id']);
-            $this->setState($this->getName() . '.type', (int) $row['type_id']);
-            $this->setState($this->getName() . '.new',  false);
+             // Check for changed access
+             if ($row['vaccess'] != $data['vaccess']) {
+                 $obj->vaccess = $data['vaccess'];
+                 $update = true;
+             }
 
-            return true;
+             // Check for changed meta data
+             $meta = (string) $data['metadata'];
+             if ($meta != $row['metadata']) {
+                 $obj->metadata = $meta;
+                 $update = true;
+             }
+
+             if ($update) {
+                 // Update existing item
+                 if (!$this->_db->updateObject('#__user_activity_items', $obj, 'asset_id', false)) {
+                     return false;
+                 }
+             }
+
+             $this->setState($this->getName() . '.id',   (int) $data['asset_id']);
+             $this->setState($this->getName() . '.type', (int) $row['type_id']);
+             $this->setState($this->getName() . '.new',  false);
+
+             return true;
         }
 
 
@@ -213,7 +229,7 @@ class UserActivityModelItem extends JModelAdmin
         $obj->id       = (int) $data['id'];
         $obj->title    = $data['title'];
         $obj->state    = (isset($data['state']) ? (int) $data['state']: 1);
-        $obj->access   = $data['access'];
+        $obj->vaccess  = $data['vaccess'];
         $obj->metadata = (string) $data['metadata'];
 
         if (!$this->_db->insertObject('#__user_activity_items', $obj, 'asset_id')) {

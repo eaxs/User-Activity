@@ -181,6 +181,22 @@ class UserActivityModelActivity extends JModelAdmin
             $data['delta_time'] = $this->getDeltaTime($data['type_id'], $data['event_id'], $data['created_by']);
         }
 
+        /**
+         * Table field "access" has been renamed to "vaccess"
+         *
+         * @since 1.2
+         */
+        if (!isset($data['vaccess'])) {
+            if (isset($data['access'])) {
+                $data['vaccess'] = $data['access'];
+
+                unset($data['access']);
+            }
+            else {
+                $data['vaccess'] = JFactory::getConfig()->get('access');
+            }
+        }
+
         // Allow an exception to be thrown.
         try
         {

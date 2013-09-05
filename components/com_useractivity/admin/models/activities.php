@@ -510,12 +510,12 @@ class UserActivityModelActivities extends JModelList
             // Regular data query
             $query->select(
                 $this->getState('list.select',
-                    'a.id, a.client_id, a.event_id, a.created, a.created_by, a.delta_time, a.access, a.state'
+                    'a.id, a.client_id, a.event_id, a.created, a.created_by, a.delta_time, a.vaccess AS access, a.state'
                 )
             );
 
             $query->select('i.asset_id, i.xref_id, i.id AS item_id, i.title,'
-                          . 'i.state AS item_state, i.access AS item_access, i.metadata');
+                          . 'i.state AS item_state, i.vaccess AS item_access, i.metadata');
             $query->select('t.id AS type_id, t.plugin, t.extension, t.name');
             $query->select('ae.id AS asset_exists');
             $query->select('ev.name AS event_name');
@@ -600,13 +600,13 @@ class UserActivityModelActivities extends JModelList
 
         // Filter by access
         if ($filter_access) {
-            $query->where('a.access = ' . (int) $filter_access);
+            $query->where('a.vaccess = ' . (int) $filter_access);
         }
 
         // Implement View Level Access
         if (!$user->authorise('core.admin', 'com_useractivity')) {
             $levels = implode(',', $user->getAuthorisedViewLevels());
-            $query->where('a.access IN (' . $levels . ')');
+            $query->where('a.vaccess IN (' . $levels . ')');
         }
 
         // Filter by search
