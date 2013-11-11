@@ -214,6 +214,16 @@ class UserActivityModelItem extends JModelAdmin
         /**
          * Create new record
          */
+         if (!isset($data['vaccess'])) {
+            if (isset($data['access'])) {
+                $data['vaccess'] = $data['access'];
+
+                unset($data['access']);
+            }
+            else {
+                $data['vaccess'] = JFactory::getConfig()->get('access');
+            }
+        }
 
         // Get item type if not set
         if (!isset($data['type_id']) || empty($data['type_id'])) {
