@@ -13,7 +13,11 @@ defined('_JEXEC') or die();
 
 // Register the component model and table
 JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_useractivity/models', 'UserActivityModel');
-JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_useractivity/tables');
+
+// Register component table classes
+JLoader::register('UserActivityTableItem', JPATH_ADMINISTRATOR . '/components/com_useractivity/tables/item.php');
+JLoader::register('JTableUserActivity',    JPATH_ADMINISTRATOR . '/components/com_useractivity/tables/useractivity.php');
+// JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_useractivity/tables');
 
 // Register the activity plugin class
 JLoader::register('plgUserActivity', dirname(__FILE__) . '/plugin.php');
