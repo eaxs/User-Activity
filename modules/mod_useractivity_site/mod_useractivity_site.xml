@@ -7,7 +7,7 @@
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>support@projectfork.net</authorEmail>
     <authorUrl>www.projectfork.net</authorUrl>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <description>MOD_USERACTIVITY_SITE_XML_DESCRIPTION</description>
     <files>
         <filename module="mod_useractivity_site">mod_useractivity_site.php</filename>
